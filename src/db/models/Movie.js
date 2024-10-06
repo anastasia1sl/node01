@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { genreList, releaseYear } from '../../constants/movies.js';
 
 const movieSchema = new Schema(
   {
@@ -11,12 +12,13 @@ const movieSchema = new Schema(
       required: true,
     },
     year: {
-      type: Number,
+      type: String,
+      match: releaseYear,
       required: true,
     },
     genre: {
       type: String,
-      enum: ['love story', 'horror', 'thriller', 'adventure', 'drama'],
+      enum: genreList,
       required: true,
     },
   },

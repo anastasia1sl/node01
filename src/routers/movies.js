@@ -8,19 +8,37 @@ import {
   deleteMovieController,
 } from '../controllers/movies.js';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
+import validateBody from '../utils/validateBody.js';
+
+import { movieAddSchema, moviePatchSchema } from '../validation/movies.js';
+import isValidId from '../middlewares/isValidId.js';
 
 const moviesRouter = Router();
 
 moviesRouter.get('/', ctrlWrapper(getAllMoviesController));
 
-moviesRouter.get('/:id', ctrlWrapper(getMovieByIdController));
+moviesRouter.get('/:id', isValidId, ctrlWrapper(getMovieByIdController));
 
-moviesRouter.post('/', ctrlWrapper(addMovieController));
+moviesRouter.post(
+  '/',
+  validateBody(movieAddSchema),
+  ctrlWrapper(addMovieController),
+);
 
-moviesRouter.put('/:id', ctrlWrapper(upsertMovieController));
+moviesRouter.put(
+  '/:id',
+  isValidId,
+  validateBody(movieAddSchema),
+  ctrlWrapper(upsertMovieController),
+);
 
-moviesRouter.patch('/:id', ctrlWrapper(patchMovieController));
+moviesRouter.patch(
+  '/:id',
+  isValidId,
+  validateBody(moviePatchSchema),
+  ctrlWrapper(patchMovieController),
+);
 
-moviesRouter.delete('/:id', ctrlWrapper(deleteMovieController));
+moviesRouter.delete('/:id', isValidId, ctrlWrapper(deleteMovieController));
 
 export default moviesRouter;
