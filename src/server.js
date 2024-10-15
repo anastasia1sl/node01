@@ -6,6 +6,7 @@ import { env } from './utils/env.js';
 import moviesRouter from './routers/movies.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
+import waterRouter from './routers/water.js';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ export const startServer = () => {
   app.use(express.json());
 
   app.use('/movies', moviesRouter); /// all requests for /movies
+  app.use('/water', waterRouter);
 
   app.use(notFoundHandler); // middleware for non existing routes
 

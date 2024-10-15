@@ -1,8 +1,11 @@
 import * as movieServices from '../services/movies.js';
 import createHttpError from 'http-errors';
+import parsePaginationParams from '../utils/parsePaginationParams.js';
 
 export const getAllMoviesController = async (req, res) => {
-  const data = await movieServices.getAllMovies(); //// Ми прибрали TRY CATCH конструкцію, uses ctrlWrapper instead
+  const { perPage, page } = parsePaginationParams(req.query);
+
+  const data = await movieServices.getAllMovies({ perPage, page }); //// Ми прибрали TRY CATCH конструкцію, using ctrlWrapper instead
 
   res.json({
     status: 200,
@@ -13,7 +16,7 @@ export const getAllMoviesController = async (req, res) => {
 
 export const getMovieByIdController = async (req, res) => {
   const { id } = req.params;
-  const data = await movieServices.getMovieById(id); //// Ми прибрали TRY CATCH конструкцію, uses ctrlWrapper instead
+  const data = await movieServices.getMovieById(id); //// Ми прибрали TRY CATCH конструкцію, using ctrlWrapper instead
 
   if (!data) {
     throw createHttpError(404, `Movie with id ${id} not found`);

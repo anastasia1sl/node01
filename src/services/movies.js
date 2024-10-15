@@ -1,6 +1,8 @@
 import MovieCollection from '../db/models/movie.js';
 
-export const getAllMovies = () => MovieCollection.find();
+export const getAllMovies = async ({ perPage, page }) => {
+  const data = await MovieCollection.find();
+};
 
 export const getMovieById = (id) => MovieCollection.findById(id);
 
